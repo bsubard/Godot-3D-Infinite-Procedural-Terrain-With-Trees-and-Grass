@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0grl6tdrab08"]
+
+[ext_resource type="Script" uid="uid://64ee4kogyt82" path="res://ChunkManager.gd" id="1_glv2v"]
+[ext_resource type="PackedScene" uid="uid://cwhpy8mwx2xao" path="res://Chunk.tscn" id="2_r0du0"]
+[ext_resource type="PackedScene" uid="uid://dop3i0ors6kmm" path="res://Player.tscn" id="2_uu6xs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r0du0"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_cm0pq"]
+sky_material = SubResource("ProceduralSkyMaterial_r0du0")
+
+[sub_resource type="Environment" id="Environment_fos0i"]
+background_mode = 2
+sky = SubResource("Sky_cm0pq")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_density = 0.001
+fog_sky_affect = 0.161
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fos0i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="ChunkManager" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_glv2v")
+player = NodePath("../Player")
+chunk_scene = ExtResource("2_r0du0")
+render_distance = 8
+overall_scale = 2.0
+
+[node name="Player" parent="." instance=ExtResource("2_uu6xs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.3204, 0)
