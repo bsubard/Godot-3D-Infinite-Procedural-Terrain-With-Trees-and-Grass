@@ -6,7 +6,8 @@ Made in Godot version 4.4, please import the project into Godot and then press p
 
 
 
-![ev7](https://github.com/user-attachments/assets/20831def-0427-445b-9c20-2f49b4f0818b)
+![ev8](https://github.com/user-attachments/assets/b2486de5-e606-4121-803a-a435e0a5260b)
+
 
 
 
