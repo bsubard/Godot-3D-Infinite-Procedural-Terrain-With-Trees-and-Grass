@@ -34,7 +34,6 @@ script = ExtResource("1_glv2v")
 player = NodePath("../Player")
 chunk_scene = ExtResource("2_r0du0")
 render_distance = 8
-overall_scale = 2.0
 
 [node name="Player" parent="." instance=ExtResource("2_uu6xs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.3204, 0)
