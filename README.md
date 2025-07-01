@@ -14,9 +14,5 @@ Everything is procedural, no assets are used, entire project takes up 53kB
 ![ev9](https://github.com/user-attachments/assets/cf1e3900-ef2f-4588-9fcb-3222883efa31)
 
 
-![image](https://github.com/user-attachments/assets/93f64475-66f3-4116-aea5-ffcd45f46b7b)
-
-
-
 
 
