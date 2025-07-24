@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0grl6tdrab08"]
+[gd_scene load_steps=8 format=3 uid="uid://d0grl6tdrab08"]
 
 [ext_resource type="Script" uid="uid://64ee4kogyt82" path="res://ChunkManager.gd" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://cwhpy8mwx2xao" path="res://Chunk.tscn" id="2_r0du0"]
 [ext_resource type="PackedScene" uid="uid://dop3i0ors6kmm" path="res://Player.tscn" id="2_uu6xs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r0du0"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+sky_top_color = Color(0.246609, 0.468349, 1, 1)
+sky_horizon_color = Color(0.571907, 0.697864, 0.719706, 1)
+sky_cover_modulate = Color(0, 0, 0, 1)
 ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 
 [sub_resource type="Sky" id="Sky_cm0pq"]
@@ -20,6 +22,8 @@ fog_enabled = true
 fog_density = 0.001
 fog_sky_affect = 0.161
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r0du0"]
+
 [node name="Main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -33,8 +37,12 @@ shadow_enabled = true
 script = ExtResource("1_glv2v")
 player = NodePath("../Player")
 chunk_scene = ExtResource("2_r0du0")
-render_distance = 8
+render_distance = 12
+load_trigger_distance = 6
 overall_scale = 2.0
+noise_path = SubResource("FastNoiseLite_r0du0")
 
-[node name="Player" parent="." instance=ExtResource("2_uu6xs")]
+[node name="Player" parent="." node_paths=PackedStringArray("world_environment") instance=ExtResource("2_uu6xs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 44.3204, 0)
+underwater_fog_color = Color(0.184945, 0.341737, 0.600405, 1)
+world_environment = NodePath("../WorldEnvironment")
