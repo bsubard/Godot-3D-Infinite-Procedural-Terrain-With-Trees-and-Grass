@@ -26,6 +26,8 @@ uniform float slope_blend_range : hint_range(0.0, 1.0) = 0.2;
 // --- Path Height Constraint ---
 uniform float path_fade_start_y : hint_range(0.0, 50.0) = 8.0;
 uniform float path_fade_end_y : hint_range(0.0, 50.0) = 10.0;
+uniform float path_low_fade_start_y : hint_range(-50.0, 50.0) = 0.0;
+uniform float path_low_fade_end_y : hint_range(-50.0, 50.0) = -4.0;
 
 // --- Standard PBR ---
 uniform float specular : hint_range(0.0, 1.0, 0.01) = 0.5;
@@ -89,15 +91,16 @@ void fragment() {
 	vec3 terrain_albedo = mix(height_albedo, albedo_slope, slope_mix_factor);
 
 	// 3. Constrained Path Blending.
-
-	// First, determine the final path influence based on the rules.
-	// Rule 1: Remove path from slopes. As slope_mix_factor goes to 1, this term goes to 0.
 	float final_path_influence = v_path_influence * (1.0 - slope_mix_factor);
 
-	// Rule 2: Fade path out based on world height.
-	// The result is 1.0 below start Y, 0.0 above end Y, and fades between them.
-	float height_fade = 1.0 - smoothstep(path_fade_start_y, path_fade_end_y, world_pos.y);
-	final_path_influence *= height_fade;
+	// Fade out at high altitudes (unchanged).
+	float high_height_fade = 1.0 - smoothstep(path_fade_start_y, path_fade_end_y, world_pos.y);
+	final_path_influence *= high_height_fade;
+
+	// Fade out at low altitudes (new).
+	// As Y goes from 0 down to -2, this value goes from 1 down to 0.
+	float low_height_fade = smoothstep(path_low_fade_end_y, path_low_fade_start_y, world_pos.y);
+	final_path_influence *= low_height_fade;
 
 	// Now sample the path texture.
 	vec3 albedo_path = sample_world(texture_albedo_path, world_pos, world_uv_scale).rgb;
